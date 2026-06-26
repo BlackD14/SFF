@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 # SteaMidra Linux Build Configuration
 #
-# Builds the GUI version (Main_gui.py) in onedir mode.
+# Builds the GUI version (main_gui.py) in onedir mode.
 # onedir is recommended for AppImage packaging — no /tmp extraction on launch.
 #
 # Usage (on Linux Mint / Ubuntu / Debian):
@@ -146,7 +146,7 @@ if _missing:
 
 # ── Analysis ──────────────────────────────────────────────────────────────────
 a = Analysis(
-    ['Main_gui.py'],
+    ['main_gui.py'],
     pathex=[spec_root],
     binaries=_qt_binaries + _syslib_binaries,
     datas=datas,

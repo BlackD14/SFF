@@ -65,7 +65,7 @@ echo  Installation Complete!
 echo ========================================
 echo.
 echo  Run SteaMidra:
-echo    CLI:  python Main.py
-echo    GUI:  python Main_gui.py
+echo    CLI:  python main.py
+echo    GUI:  python main_gui.py
 echo.
 pause

@@ -5,7 +5,7 @@
 # Supports three install types (auto-detected):
 #   appimage  — SteaMidra*.AppImage next to this script
 #   binary    — SteaMidra binary (PyInstaller onefile) next to this script
-#   source    — Main.py + requirements.txt next to this script
+#   source    — main.py + requirements.txt next to this script
 #
 # Environment variables:
 #   SKIPVENV=1   Skip venv creation/rebuild (uses existing .venv)
@@ -67,8 +67,8 @@ detect_install_type() {
     if [ -f "$SCRIPT_DIR/SteaMidra" ] || [ -f "$SCRIPT_DIR/SteaMidra.bin" ]; then
         echo "binary" && return 0
     fi
-    # Source: Main.py next to the script
-    if [ -f "$SCRIPT_DIR/Main.py" ]; then
+    # Source: main.py next to the script
+    if [ -f "$SCRIPT_DIR/main.py" ]; then
         echo "source" && return 0
     fi
     echo "unknown"
@@ -85,8 +85,8 @@ cleanup_existing() {
     rm -rf "$INSTALL_DIR/sff"               2>/dev/null || true
     rm -rf "$INSTALL_DIR/static"            2>/dev/null || true
     rm -rf "$INSTALL_DIR/third_party"       2>/dev/null || true
-    rm -f  "$INSTALL_DIR/Main.py"           2>/dev/null || true
-    rm -f  "$INSTALL_DIR/Main_gui.py"       2>/dev/null || true
+    rm -f  "$INSTALL_DIR/main.py"           2>/dev/null || true
+    rm -f  "$INSTALL_DIR/main_gui.py"       2>/dev/null || true
 }
 
 # ── Icon + desktop entry ──────────────────────────────────────────────────────
@@ -263,7 +263,7 @@ install_source() {
     cat > "$INSTALL_DIR/run.sh" <<RUNEOF
 #!/usr/bin/env bash
 cd "$INSTALL_DIR"
-exec "$INSTALL_DIR/.venv/bin/python" "$INSTALL_DIR/Main.py" "\$@"
+exec "$INSTALL_DIR/.venv/bin/python" "$INSTALL_DIR/main.py" "\$@"
 RUNEOF
     chmod +x "$INSTALL_DIR/run.sh"
 
@@ -315,8 +315,8 @@ case "${1:-install}" in
             binary)   install_binary   ;;
             source)   install_source   ;;
             unknown)
-                log_error "No SteaMidra AppImage, binary, or Main.py found in $SCRIPT_DIR"
-                log_error "Place steamidra_install.sh alongside SteaMidra.AppImage (or Main.py for source)."
+                log_error "No SteaMidra AppImage, binary, or main.py found in $SCRIPT_DIR"
+                log_error "Place steamidra_install.sh alongside SteaMidra.AppImage (or main.py for source)."
                 exit 1
                 ;;
         esac

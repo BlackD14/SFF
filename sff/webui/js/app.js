@@ -72,6 +72,9 @@ window.App = (function() {
             _populateGameDropdown();
             setInterval(_populateGameDropdown, 10 * 60 * 1000);
 
+            // Signal ready to dismiss splash screen
+            if (py.signal_ready) py.signal_ready();
+            
             // Refresh button beside game dropdown
             var homeRefreshBtn = document.getElementById('home-game-refresh');
             if (homeRefreshBtn) homeRefreshBtn.addEventListener('click', _populateGameDropdown);
@@ -418,7 +421,7 @@ window.App = (function() {
         var srcOutside = document.getElementById('game-source-outside');
         if (srcSteam) srcSteam.addEventListener('change', function() {
             _outsideMode = false;
-            document.getElementById('steam-mode-row').style.display   = '';
+            document.getElementById('steam-mode-row').style.display   = 'flex';
             document.getElementById('outside-mode-row').style.display  = 'none';
         });
         if (srcOutside) srcOutside.addEventListener('change', function() {

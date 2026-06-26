@@ -332,6 +332,19 @@ class Settings(Enum):
         False,
         str,
     )
+    
+    WINDOW_GEOMETRY = SettingItem(
+        "window_geometry",
+        "Window Geometry (managed automatically)",
+        False,
+        str,
+    )
+    USE_MODERN_UI = SettingItem(
+        "use_modern_ui",
+        "Use Modern Web-based UI",
+        False,
+        bool,
+    )
 
     @property
     def key_name(self):

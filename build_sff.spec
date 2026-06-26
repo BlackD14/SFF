@@ -61,7 +61,7 @@ def _validate_rich_packaging(hidden_imports, data_entries):
         )
 
 
-# Get the directory where this spec file is located (where Main.py, sff.ico, etc. live)
+# Get the directory where this spec file is located (where main.py, sff.ico, etc. live)
 spec_root = os.path.abspath(SPECPATH)
 icon_path = os.path.join(spec_root, 'SFF.ico')
 
@@ -178,7 +178,7 @@ hiddenimports = [
 _validate_rich_packaging(hiddenimports, datas)
 
 a = Analysis(
-    ['Main.py'],
+    ['main.py'],
     pathex=[spec_root],
     binaries=[],
     datas=datas,

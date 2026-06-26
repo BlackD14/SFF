@@ -118,6 +118,13 @@ class WebBridge(QObject):
         # reads through get_game_update_state(). Keys are str(app_id).
         # Network/CM failures leave the prior entry intact.
         self._update_state_cache: dict[str, dict] = {}
+        
+    @pyqtSlot()
+    def signal_ready(self):
+        """Signal from the WebUI once JS is fully initialized and the first frame is rendered"""
+        parent = self.parent()
+        if parent and hasattr(parent, 'dismiss_splash'):
+            parent.dismiss_splash()
 
     # ── helpers ──────────────────────────────────────────────────
 
