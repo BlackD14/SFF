@@ -329,10 +329,14 @@ namespace LuaLoader {
 
         // Phase 1: parallel file read + mtime stat
         std::vector<FileSnapshot> snapshots(luaFiles.size());
-        const size_t hwThreads = static_cast<size_t>(
-            std::max(1u, std::thread::hardware_concurrency()));
-        const size_t workerCount =
-            std::max<size_t>(1, std::min(luaFiles.size(), hwThreads));
+        
+        unsigned int rawThreads = std::thread::hardware_concurrency();
+        const size_t hwThreads = static_cast<size_t>(rawThreads > 0 ? rawThreads : 1u);
+
+        size_t clampedWorkers = luaFiles.size();
+        if (clampedWorkers > hwThreads) clampedWorkers = hwThreads;
+        if (clampedWorkers < 1) clampedWorkers = 1;
+        const size_t workerCount = clampedWorkers;
         std::atomic<size_t> nextIx{0};
         std::vector<std::future<void>> jobs;
         jobs.reserve(workerCount);
@@ -412,8 +416,10 @@ namespace LuaLoader {
             if (snapshots[i].appId) cfgIdx.push_back(i);
         }
         if (!cfgIdx.empty()) {
-            const size_t cfgWorkers =
-                std::max<size_t>(1, std::min(cfgIdx.size(), workerCount));
+            size_t clampedCfg = cfgIdx.size();
+            if (clampedCfg > workerCount) clampedCfg = workerCount;
+            if (clampedCfg < 1) clampedCfg = 1;
+            const size_t cfgWorkers = clampedCfg;
             std::atomic<size_t> cfgNext{0};
             std::vector<std::future<void>> cfgJobs;
             cfgJobs.reserve(cfgWorkers);
